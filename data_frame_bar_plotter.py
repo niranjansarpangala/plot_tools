@@ -1,4 +1,8 @@
 #Shree Durga Devi Namah
+import os
+home =os.getenv("HOME")
+import sys
+sys.path.append(home)
 import matplotlib
 def mat_behaviour(show):
     if show==0:
