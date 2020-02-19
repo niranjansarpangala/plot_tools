@@ -10,7 +10,7 @@ def mat_behaviour(show):
         matplotlib.use('PS') #for vector graphics
 mat_behaviour(0)
 import matplotlib.pyplot as plt
-from plot_tools.plot_tool_class import quick_plot_tools
+from plot_tools.plot_tool_class import quick_plot_tools,distinct_colors
 import numpy as np
 def bar_plotter(data1,*args, **kwargs):
     from matplotlib import rcParams
@@ -48,6 +48,21 @@ def bar_plotter(data1,*args, **kwargs):
     return fig
 
 def bar_plot_one_variable(data1,*args, **kwargs):
+    """
+    Return matplotlib fig which is a bar plot of given yv vs. ind.
+    
+    data1= pandas dataframe. 
+    
+    Keyword arguments
+    yv (string) The y-value that you want to plot - column name of your dataframe
+    ind (string) Column name to be used as the x value
+    ylim (tuple) The limit on y axis
+    yerr (string) name of the column which has corresponding error in yvalues
+    ylabel (string) Yaxis label
+    xlabel (string) Xaxis label
+    ymult (float) Scaling for the yvalue. yvalue will be multiplied with ymult before plotting.
+    
+    """
     from matplotlib import rcParams
     rcParams.update({'figure.autolayout': True})
     ylim = kwargs.get('ylim', None)
@@ -65,12 +80,15 @@ def bar_plot_one_variable(data1,*args, **kwargs):
         data2[yerr]=data2[yerr]*ymult
     data1=data2
     #fig,ax1=plt.subplots()
-    no_items=5
-    width = 1.0/(no_items + 2)
-    
+    no_items=len(data1[ind])
+    width = 1.0/(no_items-2)
+    c=distinct_colors()
+    lines=c.color()
+    color=[lines[i] for i in range(no_items)]
     if yerr is not None:
-        ax1=data1.plot.bar(y=yv,rot=0,yerr=data1[yerr])
-        #ax1.bar(list(data1[ind]),data1[yv],yerr=data1[yerr],width=width)
+        fig, ax1=plt.subplots()
+        #ax1=data1.plot.bar(x=ind,y=yv,rot=0,yerr=data1[yerr])
+        ax1.bar(data1[ind].apply(str),data1[yv],yerr=data1[yerr],width=width,color=color)
     else:
         ax1=data1[yv].plot.bar(x=ind,rot=0)
     ax1.set_ylim(ylim)
