@@ -39,11 +39,11 @@ def bar_plotter(data1,*args, **kwargs):
     ax1.set_ylabel(ylabel,fontname='serif',fontsize=lfsiz)
     ax1.tick_params(axis='both',which='both', labelsize=llsiz)
     ax1.tick_params(axis='both',which='major',length=12,width=1.5 )
-    #ax1.legend(fontsize=lfsiz-7)
+    ax1.legend(fontsize=lfsiz-7)
     handles_p,labels_p=ax1.get_legend_handles_labels()
     for num in range(len(labels_p)):
         labels_p[num]=colum+" = " +labels_p[num]
-    ax1.legend(handles=handles_p,labels=labels_p,fontsize=12)
+    ax1.legend(handles=handles_p,labels=labels_p,fontsize=lfsiz-7,loc='lower center')
     fig=ax1.get_figure()
     return fig
 
@@ -81,7 +81,7 @@ def bar_plot_one_variable(data1,*args, **kwargs):
     data1=data2
     #fig,ax1=plt.subplots()
     no_items=len(data1[ind])
-    width = 1.0/(no_items-2)
+    width = 1.0/(no_items-2+1)
     c=distinct_colors()
     lines=c.color()
     color=[lines[i] for i in range(no_items)]
@@ -96,7 +96,7 @@ def bar_plot_one_variable(data1,*args, **kwargs):
     ax1.set_ylabel(ylabel,fontname='serif',fontsize=lfsiz)
     ax1.tick_params(axis='both',which='both', labelsize=llsiz)
     ax1.tick_params(axis='both',which='major',length=12,width=1.5 )
-    #ax1.legend(fontsize=lfsiz-7)
+    ax1.legend(fontsize=lfsiz-7)
     #handles_p,labels_p=ax1.get_legend_handles_labels()
     #for num in range(len(labels_p)):
     #    labels_p[num]=colum+" = " +labels_p[num]
